@@ -1,14 +1,19 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 import { useStyles } from '../../../pages/AuthenticationPage/AuthenticationPage.helper';
+import { postLoginUser } from '../../../utils/api';
+import { UserCredentialsParams } from '../../../utils/types';
 import { TextFieldComponent } from '../../TextFieldComponent/TextFieldComponent';
 
 interface LoginFormProps {}
 
 const LoginForm: FC<LoginFormProps> = () => {
+  const { addToast } = useToasts();
   const styles = useStyles();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: { password: '', email: '' },
     enableReinitialize: true,
@@ -17,19 +22,26 @@ const LoginForm: FC<LoginFormProps> = () => {
     /*  validationSchema: validationSchemaAccountBox, */
     onSubmit: (values, actions) => {
       submitForm(values);
-      actions.resetForm({});
+      /*  actions.resetForm({}); */
     },
   });
   const { handleBlur, handleSubmit, setFieldTouched, values, handleChange, errors, resetForm } =
     formik;
 
-  const submitForm = (values: any) => {
-    /*     console.log('value', values); */
+  const submitForm = async (values: UserCredentialsParams) => {
+    try {
+      postLoginUser(values).then(() => {
+        addToast('Login Successfully', { appearance: 'success' });
+        navigate('/conversations');
+      });
+    } catch (error) {
+      console.log(error);
+      addToast('Login Unsuccessfully', { appearance: 'error' });
+    }
   };
 
   return (
     <form className={styles.registerForm} onSubmit={handleSubmit}>
-      52:33 and 2:33:51 is BE
       <Grid>
         <TextFieldComponent
           placeholder="Your email"

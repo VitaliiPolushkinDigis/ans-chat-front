@@ -3,11 +3,15 @@ import { useFormik } from 'formik';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from '../../../pages/AuthenticationPage/AuthenticationPage.helper';
+import { postRegisterUser } from '../../../utils/api';
+import { CreateUserParams } from '../../../utils/types';
 import { TextFieldComponent } from '../../TextFieldComponent/TextFieldComponent';
+import { useToasts } from 'react-toast-notifications';
 
 interface RegisterFormProps {}
 
 const RegisterForm: FC<RegisterFormProps> = () => {
+  const { addToast } = useToasts();
   const styles = useStyles();
   const formik = useFormik({
     initialValues: { password: '', repeatPassword: '', email: '', firstName: '', lastName: '' },
@@ -16,15 +20,23 @@ const RegisterForm: FC<RegisterFormProps> = () => {
     validateOnBlur: false,
     /*  validationSchema: validationSchemaAccountBox, */
     onSubmit: (values, actions) => {
-      submitForm(values);
+      const { repeatPassword, ...dataToSend } = values;
+      submitForm(dataToSend);
       actions.resetForm({});
     },
   });
   const { handleBlur, handleSubmit, setFieldTouched, values, handleChange, errors, resetForm } =
     formik;
 
-  const submitForm = (values: any) => {
-    console.log('value', values);
+  const submitForm = async (data: CreateUserParams) => {
+    try {
+      await postRegisterUser(data).then(() => {
+        addToast('Registered Successfully', { appearance: 'success' });
+      });
+    } catch (error) {
+      console.log(error);
+      addToast('Register Unsuccessfully', { appearance: 'error' });
+    }
   };
 
   return (
