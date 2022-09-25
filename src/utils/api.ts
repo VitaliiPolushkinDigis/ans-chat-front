@@ -17,3 +17,5 @@ export const postLoginUser = async (data: UserCredentialsParams) =>
   axios.post(`${API_URL}/auth/login`, data, config);
 
 export const getAuthUser = () => axios.get<User>(`${API_URL}/auth/status`, config);
+
+export const getConversations = () => axios.get(`${API_URL}/conversations`, config);
