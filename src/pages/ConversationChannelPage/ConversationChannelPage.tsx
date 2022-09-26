@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import MessagePanel from '../../components/messages/MessagePanel';
 import { getConversationMessages } from '../../utils/api';
 import { SocketContext } from '../../utils/context/SocketContext';
-import { MessageType } from '../../utils/types';
+import { MessageEventPayload, MessageType } from '../../utils/types';
 
 interface ConversationChannelPageProps {}
 
@@ -17,30 +17,27 @@ const ConversationChannelPage: FC<ConversationChannelPageProps> = () => {
     const conversationId = parseInt(id!);
     getConversationMessages(conversationId)
       .then(({ data }) => {
-        setMessages(data);
+        setMessages(data.messages);
       })
       .catch((err) => console.log(err));
   }, [id]);
 
   useEffect(() => {
     socket.on('connected', () => console.log('Connected'));
-    socket.on('onMessage', (payload: any) => {
-      console.log('payload', payload);
-    });
+    socket.on('onMessage', (payload: MessageEventPayload) => {
+      console.log('Message Received');
+      const { conversation, ...message } = payload;
 
+      setMessages((prev) => [message, ...prev]);
+    });
     return () => {
       socket.off('connected');
       socket.off('onMessage');
     };
   }, []);
 
-  /*   if (messages && !messages.length) {
-    return <div>error</div>;
-  } */
-
   return (
     <Grid sx={{ marginLeft: '360px', height: '100vh' }}>
-      {' '}
       <MessagePanel messages={messages}></MessagePanel>
     </Grid>
   );

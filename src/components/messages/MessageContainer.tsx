@@ -13,8 +13,6 @@ type FormattedMessageProps = {
   message: MessageType;
 };
 export const FormattedMessage: FC<FormattedMessageProps> = ({ user, message }) => {
-  console.log('call it', message.content, message.id);
-
   return (
     <Grid
       style={{
@@ -60,36 +58,30 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
 
   const formatMessages = () => {
     //CHECK IT
-    if (messages) {
-      console.log('here');
 
-      if (messages.length) {
-        console.log('there');
-        return messages.map((m, index, arr) => {
-          const nextIndex = index + 1;
-          const currentMessage = arr[index];
-          const nextMessage = arr[nextIndex];
+    return messages.map((m, index, arr) => {
+      const nextIndex = index + 1;
+      const currentMessage = arr[index];
+      const nextMessage = arr[nextIndex];
 
-          if (arr.length === nextIndex) return <FormattedMessage user={user} message={m} />;
+      if (arr.length === nextIndex) return <FormattedMessage user={user} message={m} />;
 
-          if (currentMessage.author.id === nextMessage.author.id) {
-            return (
-              <Grid
-                style={{
-                  display: 'flex',
-                  gap: '20px',
-                  alignItems: 'center',
-                  padding: '5px 0',
-                }}
-              >
-                <Box padding="0 0 0 70px">{m.content}</Box>
-              </Grid>
-            );
-          }
-          return <FormattedMessage user={user} message={m} />;
-        });
+      if (currentMessage.author.id === nextMessage.author.id) {
+        return (
+          <Grid
+            style={{
+              display: 'flex',
+              gap: '20px',
+              alignItems: 'center',
+              padding: '5px 0',
+            }}
+          >
+            <Box padding="0 0 0 70px">{m.content}</Box>
+          </Grid>
+        );
       }
-    }
+      return <FormattedMessage user={user} message={m} />;
+    });
   };
 
   useEffect(() => {
