@@ -20,3 +20,10 @@ export type User = {
   firstName: string;
   lastName: string;
 };
+
+export type MessageType = {
+  id: number;
+  content: string;
+  createdAt: string;
+  author: User;
+};

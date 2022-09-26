@@ -19,7 +19,6 @@ const ConversationPage: FC<ConversationPageProps> = () => {
     getConversations()
       .then(({ data }) => {
         setConversations(data);
-        console.log(data);
       })
       .catch((err) => console.log(err));
   }, []);

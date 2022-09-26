@@ -1,13 +1,31 @@
 import { Grid } from '@mui/material';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import MessagePanel from '../../components/messages/MessagePanel';
+import { getConversationMessages } from '../../utils/api';
+import { MessageType } from '../../utils/types';
 
 interface ConversationChannelPageProps {}
 
 const ConversationChannelPage: FC<ConversationChannelPageProps> = () => {
-  const params = useParams();
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const { id } = useParams();
 
-  return <Grid sx={{ marginLeft: '360px' }}>ConversationChannel {params.id}</Grid>;
+  useEffect(() => {
+    const conversationId = parseInt(id!);
+    getConversationMessages(conversationId)
+      .then(({ data }) => {
+        setMessages(data);
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+
+  return (
+    <Grid sx={{ marginLeft: '360px', height: '100vh' }}>
+      {' '}
+      <MessagePanel messages={messages}></MessagePanel>
+    </Grid>
+  );
 };
 
 export default ConversationChannelPage;
