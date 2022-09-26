@@ -60,31 +60,36 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
 
   const formatMessages = () => {
     //CHECK IT
-    return messages.map((m, index, arr) => {
-      const currentMessage = arr[index];
-      const nextMessage = arr[index + 1];
+    if (messages) {
+      console.log('here');
 
-      if (arr.length === index + 1) {
-        console.log('m', m);
+      if (messages.length) {
+        console.log('there');
+        return messages.map((m, index, arr) => {
+          const nextIndex = index + 1;
+          const currentMessage = arr[index];
+          const nextMessage = arr[nextIndex];
 
-        return <FormattedMessage user={user} message={m} />;
+          if (arr.length === nextIndex) return <FormattedMessage user={user} message={m} />;
+
+          if (currentMessage.author.id === nextMessage.author.id) {
+            return (
+              <Grid
+                style={{
+                  display: 'flex',
+                  gap: '20px',
+                  alignItems: 'center',
+                  padding: '5px 0',
+                }}
+              >
+                <Box padding="0 0 0 70px">{m.content}</Box>
+              </Grid>
+            );
+          }
+          return <FormattedMessage user={user} message={m} />;
+        });
       }
-      if (currentMessage.author.id === nextMessage.author.id) {
-        return (
-          <Grid
-            style={{
-              display: 'flex',
-              gap: '20px',
-              alignItems: 'center',
-              padding: '5px 0',
-            }}
-          >
-            <Box padding="0 0 0 70px">{m.content}</Box>
-          </Grid>
-        );
-      }
-      return <FormattedMessage user={user} message={m} />;
-    });
+    }
   };
 
   useEffect(() => {
