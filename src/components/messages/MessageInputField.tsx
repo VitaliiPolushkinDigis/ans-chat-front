@@ -1,6 +1,17 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import { Dispatch, FC, FormEvent, SetStateAction } from 'react';
 
-export const MessageInputField = () => {
+interface MessageInputFieldProps {
+  message: string;
+  setMessage: Dispatch<SetStateAction<string>>;
+  sendMessage: (e: FormEvent<HTMLFormElement>) => void;
+}
+
+export const MessageInputField: FC<MessageInputFieldProps> = ({
+  message,
+  setMessage,
+  sendMessage,
+}) => {
   return (
     <Box
       style={{
@@ -11,21 +22,28 @@ export const MessageInputField = () => {
         padding: '24px 32px',
       }}
     >
-      <input
-        style={{
-          backgroundColor: 'inherit',
-          outline: 'none',
-          border: 'none',
-          color: '#454545',
-          fontFamily: 'Inter',
-          boxSizing: 'border-box',
-          fontSize: '18px',
-          width: '100%',
-          padding: '0',
-          margin: '4px 0',
-          resize: 'none',
-        }}
-      />
+      <form onSubmit={sendMessage} style={{ display: 'flex' }}>
+        <input
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          style={{
+            backgroundColor: 'inherit',
+            outline: 'none',
+            border: 'none',
+            color: '#454545',
+            fontFamily: 'Inter',
+            boxSizing: 'border-box',
+            fontSize: '18px',
+            width: '100%',
+            padding: '0',
+            margin: '4px 0',
+            resize: 'none',
+          }}
+        />
+        <Button type="submit" color="primary" variant="contained">
+          Send
+        </Button>
+      </form>
     </Box>
   );
 };
