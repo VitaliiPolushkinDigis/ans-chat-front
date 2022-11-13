@@ -64,7 +64,7 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
       const currentMessage = arr[index];
       const nextMessage = arr[nextIndex];
 
-      if (arr.length === nextIndex) return <FormattedMessage user={user} message={m} />;
+      if (arr.length === nextIndex) return <FormattedMessage key={m.id} user={user} message={m} />;
 
       if (currentMessage.author.id === nextMessage.author.id) {
         return (
@@ -75,12 +75,13 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
               alignItems: 'center',
               padding: '5px 0',
             }}
+            key={m.id}
           >
             <Box padding="0 0 0 70px">{m.content}</Box>
           </Grid>
         );
       }
-      return <FormattedMessage user={user} message={m} />;
+      return <FormattedMessage key={m.id} user={user} message={m} />;
     });
   };
 
