@@ -1,12 +1,15 @@
 import { Button, FormControl, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
+import { addConversation } from '../../../store/conversationSlice';
 import { TextFieldComponent } from '../../TextFieldComponent/TextFieldComponent';
 import { classes } from './CreateNewConversationForm.helper';
 
 interface CreateNewConversationFormProps {}
 
 const CreateNewConversationForm: FC<CreateNewConversationFormProps> = ({}) => {
+  const dispatch = useDispatch();
   const { handleBlur, handleSubmit, setFieldTouched, values, handleChange, errors, resetForm } =
     useFormik({
       initialValues: { name: '', message: '' },
@@ -23,6 +26,14 @@ const CreateNewConversationForm: FC<CreateNewConversationFormProps> = ({}) => {
   const submitForm = async (/* data: CreateUserParams */) => {
     try {
       console.log('post', values);
+      dispatch(
+        addConversation({
+          id: 1,
+          creator: { id: 1, email: '', firstName: '', lastName: '' },
+          recipient: { id: 1, email: '', firstName: '', lastName: '' },
+          createdAt: new Date(),
+        }),
+      );
 
       /*      await postRegisterUser(data).then(() => {
           addToast('Registered Successfully', { appearance: 'success' });
