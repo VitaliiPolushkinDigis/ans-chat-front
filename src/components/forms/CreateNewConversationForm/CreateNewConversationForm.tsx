@@ -31,7 +31,7 @@ const CreateNewConversationForm: FC<CreateNewConversationFormProps> = ({}) => {
           id: 1,
           creator: { id: 1, email: '', firstName: '', lastName: '' },
           recipient: { id: 1, email: '', firstName: '', lastName: '' },
-          createdAt: new Date(),
+          createdAt: new Date().toString(),
         }),
       );
 

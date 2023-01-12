@@ -2,7 +2,7 @@ export type ConversationType = {
   id: number;
   creator: User;
   recipient: User;
-  createdAt: Date;
+  createdAt: Date | string;
 };
 
 export type CreateUserParams = {
