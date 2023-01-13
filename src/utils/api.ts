@@ -5,11 +5,11 @@ const API_URL = process.env.REACT_APP_API_URL;
 const config: AxiosRequestConfig = {
   withCredentials: true,
   headers: {
-    'Access-Control-Allow-Origin': 'http://localhost:3000',
+    'Access-Control-Allow-Origin': 'https://localhost:3000',
     'Content-Type': 'application/json',
   },
 };
-
+//'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
 export const postRegisterUser = async (data: CreateUserParams) =>
   axios.post(`${API_URL}/auth/register`, data, config);
 
