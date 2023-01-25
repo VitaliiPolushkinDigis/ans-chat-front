@@ -13,6 +13,7 @@ import { socket, SocketContext } from './utils/context/SocketContext';
 import { User } from './utils/types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store/store';
+import TestPage from './pages/Test/TestPage';
 
 function AppWithProviders({ children, user, setUser, socket }: PropsWithChildren & Props) {
   return (
@@ -54,6 +55,7 @@ function App() {
           </Route>
 
           {/*       <Route path="conversations/:id" element={<ConversationChannelPage />} /> */}
+          <Route path="test" element={<TestPage />}></Route>
         </Routes>
       </Router>
     </AppWithProviders>
