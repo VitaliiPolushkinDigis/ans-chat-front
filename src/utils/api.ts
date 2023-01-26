@@ -1,4 +1,10 @@
-import { CreateUserParams, User, UserCredentialsParams, CreateMessageParams } from './types';
+import {
+  CreateUserParams,
+  User,
+  UserCredentialsParams,
+  CreateMessageParams,
+  ConversationType,
+} from './types';
 import axios, { AxiosRequestConfig } from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -9,7 +15,7 @@ const config: AxiosRequestConfig = {
     'Content-Type': 'application/json',
   },
 };
-//'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+// 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
 export const postRegisterUser = async (data: CreateUserParams) =>
   axios.post(`${API_URL}/auth/register`, data, config);
 
@@ -18,7 +24,8 @@ export const postLoginUser = async (data: UserCredentialsParams) =>
 
 export const getAuthUser = () => axios.get<User>(`${API_URL}/auth/status`, config);
 
-export const getConversations = () => axios.get(`${API_URL}/conversations`, config);
+export const getConversations = () =>
+  axios.get<ConversationType[]>(`${API_URL}/conversations`, config);
 
 export const getConversationMessages = (id: number) =>
   axios.get(`${API_URL}/messages/${id}`, config);
@@ -37,4 +44,10 @@ export const getMock = (data: any) => {
 export const serviceApi = {
   getTodo,
   getMock,
+};
+
+export const API_AC_TYPES = {
+  REQUESTED: '_REQUESTED',
+  SUCCESSFUL: '_SUCCESSFUL',
+  REJECTED: '_REJECTED',
 };

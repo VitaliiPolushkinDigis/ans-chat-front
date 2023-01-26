@@ -6,8 +6,8 @@ interface Props {
 }
 
 export const classes = {
-  box: `box`,
-  title: `title`,
+  box: 'box',
+  title: 'title',
 };
 
 export const BoxWrapper = styled(Box)<Props>(({ padding }) => ({

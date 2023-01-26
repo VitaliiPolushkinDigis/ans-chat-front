@@ -2,19 +2,18 @@ import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { FC, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTypedSelector } from '../../store/store';
 import { AuthContext } from '../../utils/context/AuthContext';
 import { ConversationType } from '../../utils/types';
 import CreateNewConversationForm from '../forms/CreateNewConversationForm/CreateNewConversationForm';
 import SimpleModal from '../modals/SimpleModal';
 import ConversationCreateBtn from './ConversationCreateBtn/ConversationCreateBtn';
 
-interface ConversationSidebarProps {
-  conversations: ConversationType[];
-}
-
-const ConversationSidebar: FC<ConversationSidebarProps> = ({ conversations }) => {
+const ConversationSidebar: FC = ({}) => {
   const [showModal, setShowModal] = useState(false);
   const { user } = useContext(AuthContext);
+
+  const { conversations } = useTypedSelector((state) => state.conversations);
 
   const getDisplayUser = (conversation: ConversationType) => {
     return conversation.creator.id === user?.id ? conversation.recipient : conversation.creator;
@@ -33,7 +32,7 @@ const ConversationSidebar: FC<ConversationSidebarProps> = ({ conversations }) =>
       <Grid display="flex" justifyContent={'flex-end'}>
         <ConversationCreateBtn showModal={() => setShowModal(true)} />
       </Grid>
-      {conversations.map((conversation) => (
+      {Array.from(conversations, ([_, conversation]) => conversation).map((conversation) => (
         <Link
           style={{ textDecoration: 'none' }}
           key={conversation.id}

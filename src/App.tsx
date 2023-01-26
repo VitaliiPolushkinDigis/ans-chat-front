@@ -14,6 +14,9 @@ import { User } from './utils/types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store/store';
 import TestPage from './pages/Test/TestPage';
+import { enableMapSet } from 'immer';
+
+enableMapSet();
 
 function AppWithProviders({ children, user, setUser, socket }: PropsWithChildren & Props) {
   return (

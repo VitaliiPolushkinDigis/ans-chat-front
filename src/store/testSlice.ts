@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTodo } from '../utils/api';
-import { API_AC_TYPES } from './store';
+import { API_AC_TYPES, getTodo } from '../utils/api';
 
 const initialState = {
   test: 'initialValue',

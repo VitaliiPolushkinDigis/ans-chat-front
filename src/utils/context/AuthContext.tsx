@@ -7,5 +7,5 @@ type AuthContextType = {
 };
 
 export const AuthContext = createContext<AuthContextType>({
-  udpateAuthUser: () => {},
+  udpateAuthUser: () => ({}),
 });

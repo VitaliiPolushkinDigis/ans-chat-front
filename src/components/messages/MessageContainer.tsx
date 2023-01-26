@@ -57,7 +57,7 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
   const { user } = useContext(AuthContext);
 
   const formatMessages = () => {
-    //CHECK IT
+    // CHECK IT
 
     return messages.map((m, index, arr) => {
       const nextIndex = index + 1;
