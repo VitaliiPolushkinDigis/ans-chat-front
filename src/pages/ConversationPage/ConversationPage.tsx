@@ -6,9 +6,7 @@ import Page from '../../components/layouts/Page/Page';
 import { fetchConversations } from '../../store/conversationSlice';
 import { useAppDispatch, useTypedSelector } from '../../store/store';
 
-interface ConversationPageProps {}
-
-const ConversationPage: FC<ConversationPageProps> = () => {
+const ConversationPage = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { conversations } = useTypedSelector((state) => state.conversations);
@@ -16,8 +14,6 @@ const ConversationPage: FC<ConversationPageProps> = () => {
   useEffect(() => {
     dispatch(fetchConversations());
   }, []);
-
-  console.log('sdf');
 
   return (
     <Page>

@@ -29,6 +29,11 @@ export type MessageType = {
   author: User;
 };
 
+export type FetchMessagePayload = {
+  id: number;
+  messages: MessageType[];
+};
+
 export type MessageEventPayload = {
   id: number;
   createdAt: string;

@@ -32,7 +32,7 @@ const ConversationSidebar: FC = ({}) => {
       <Grid display="flex" justifyContent={'flex-end'}>
         <ConversationCreateBtn showModal={() => setShowModal(true)} />
       </Grid>
-      {Array.from(conversations, ([_, conversation]) => conversation).map((conversation) => (
+      {conversations.map((conversation) => (
         <Link
           style={{ textDecoration: 'none' }}
           key={conversation.id}
