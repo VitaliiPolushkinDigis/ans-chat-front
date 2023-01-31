@@ -42,6 +42,7 @@ export const conversationsSlice = createSlice({
       /*    state.conversations.push(action.payload);
       state.loading = false; */
     },
+
     GET_CONVERSATIONS_REQUESTED: (state, _action) => {
       state.loading = true;
     },

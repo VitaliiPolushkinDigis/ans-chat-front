@@ -3,6 +3,7 @@ import { FC, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MessagePanel from '../../components/messages/MessagePanel';
 import { fetchMessages } from '../../store/conversationSlice';
+import { addMessage } from '../../store/messageSlice';
 import { useAppDispatch, useTypedSelector } from '../../store/store';
 import { getConversationMessages } from '../../utils/api';
 import { SocketContext } from '../../utils/context/SocketContext';
@@ -28,6 +29,7 @@ const ConversationChannelPage: FC<ConversationChannelPageProps> = () => {
       const { conversation, ...message } = payload;
       //add new message to corresponding conversation messages
       setMessages((prev) => [message, ...prev]);
+      dispatch(addMessage({ id: parseInt(id!), message }));
     });
     return () => {
       socket.off('connected');
