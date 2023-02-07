@@ -50,11 +50,6 @@ const TestPage: FC<TestPageProps> = () => {
 
   console.log('lengthCount', lengthCount);
 
-  useEffect(() => {
-
-  }, [])
-  
-
   return (
     <Page display="flex">
       <div>{test}</div>
