@@ -2,6 +2,7 @@ import { configureStore, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { API_AC_TYPES } from '../utils/api';
 import conversationsReducer from './conversationSlice';
+import messageReducer from './messageSlice';
 import testReducer from './testSlice';
 import { ACPayload } from './types';
 
@@ -29,6 +30,7 @@ const apiMiddleware = () => (next: Dispatch) => (action: PayloadAction<ACPayload
 
 export const store = configureStore({
   reducer: {
+    messages: messageReducer,
     conversations: conversationsReducer,
     test: testReducer,
   },

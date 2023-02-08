@@ -59,11 +59,13 @@ export const FormattedMessage: FC<FormattedMessageProps> = ({ user, message }) =
 export const MessageContainer: FC<Props> = () => {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-  const conversations = useTypedSelector((state) => state.conversations);
-  const messages = conversations.messages;
+  const conversationMessages = useTypedSelector((state) => state.messages.messages);
 
   const formatMessages = () => {
-    const currentConversationMessages = messages.find((m) => m.id === parseInt(id!));
+    const currentConversationMessages = conversationMessages.find((m) => m.id === parseInt(id!));
+    if (!currentConversationMessages) {
+      return [];
+    }
 
     return currentConversationMessages?.messages.map((m, index: number, arr) => {
       const nextIndex = index + 1;
