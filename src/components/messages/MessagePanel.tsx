@@ -6,11 +6,9 @@ import { MessageContainer } from './MessageContainer';
 import { MessageInputField } from './MessageInputField';
 import { MessagePanelHeader } from './MessagePanelHeader';
 
-interface MessagePanelProps {
-  messages: MessageType[];
-}
+interface MessagePanelProps {}
 
-const MessagePanel: FC<MessagePanelProps> = ({ messages }) => {
+const MessagePanel: FC<MessagePanelProps> = ({}) => {
   const { id } = useParams();
   const [message, setMessage] = useState('');
   const sendMessage = (e: FormEvent<HTMLFormElement>) => {
@@ -28,7 +26,7 @@ const MessagePanel: FC<MessagePanelProps> = ({ messages }) => {
   return (
     <>
       <MessagePanelHeader />
-      <MessageContainer messages={messages} />
+      <MessageContainer />
       <MessageInputField message={message} setMessage={setMessage} sendMessage={sendMessage} />
     </>
   );

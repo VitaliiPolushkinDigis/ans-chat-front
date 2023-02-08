@@ -6,9 +6,7 @@ import { MessageType, User } from '../../utils/types';
 import { useTypedSelector } from '../../store/store';
 import { useParams } from 'react-router-dom';
 
-type Props = {
-  messages: MessageType[];
-};
+type Props = {};
 
 type FormattedMessageProps = {
   user?: User;

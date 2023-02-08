@@ -13,7 +13,6 @@ interface ConversationChannelPageProps {}
 const ConversationChannelPage: FC<ConversationChannelPageProps> = () => {
   const socket = useContext(SocketContext);
   const dispatch = useAppDispatch();
-  const [messages, setMessages] = useState<MessageType[]>([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -26,9 +25,7 @@ const ConversationChannelPage: FC<ConversationChannelPageProps> = () => {
     socket.on('onMessage', (payload: MessageEventPayload) => {
       console.log('Message Received');
       const { conversation, ...message } = payload;
-      //add new message to corresponding conversation messages
-      setMessages((prev) => [message, ...prev]);
-      dispatch(addMessage({ id: parseInt(id!), message }));
+      dispatch(addMessage(payload));
     });
     return () => {
       socket.off('connected');
@@ -38,9 +35,10 @@ const ConversationChannelPage: FC<ConversationChannelPageProps> = () => {
 
   return (
     <Grid sx={{ marginLeft: '360px', height: '100vh' }}>
-      <MessagePanel messages={messages}></MessagePanel>
+      <MessagePanel></MessagePanel>
     </Grid>
   );
 };
 
 export default ConversationChannelPage;
+// 1.02.23 D4
