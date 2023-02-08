@@ -5,7 +5,9 @@ import Page from '../../components/layouts/Page/Page';
 import { useTypedSelector } from '../../store/store';
 import { addTest, getTodoAC } from '../../store/testSlice';
 import Loader from '../../utils/workers/components/Loader';
+import Table from '../../utils/workers/components/Table';
 import { processList } from '../../utils/workers/longProcesses/enums';
+import { PofileListType, GetDataType, ProfileType } from '../../utils/workers/longProcesses/types';
 
 interface TestPageProps {}
 
@@ -19,6 +21,11 @@ const TestPage: FC<TestPageProps> = () => {
   console.log('loading', loading);
 
   const [lengthCount, setLengthCount] = useState({ loading: true, value: 0 });
+  const [data, setData] = useState<PofileListType>({
+    loading: true,
+    list: [],
+    page: 1,
+  });
 
   const counter: Worker = useMemo(
     () => new Worker(new URL('../../utils/workers/longProcesses/count.ts', import.meta.url)),
@@ -48,6 +55,33 @@ const TestPage: FC<TestPageProps> = () => {
     }
   }, [counter]);
 
+  useEffect(() => {
+    if (window.Worker) {
+      const requiest = {
+        action: processList.getData,
+        period: 'initial',
+        thePageNumber: data.page,
+      } as GetDataType;
+
+      getData.postMessage(JSON.stringify(requiest));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.Worker) {
+      getData.onmessage = (e: MessageEvent<string>) => {
+        const response = JSON.parse(e.data) as PofileListType;
+
+        setData((prev) => ({
+          ...prev,
+          loading: response.loading,
+          list: response.list,
+          page: response.page,
+        }));
+      };
+    }
+  }, [getData]);
+
   console.log('lengthCount', lengthCount);
 
   return (
@@ -70,7 +104,9 @@ const TestPage: FC<TestPageProps> = () => {
             )}
           </b>
         </section>
-        <section className="table-container"></section>
+        <section className="table-container">
+          {data.loading ? <Loader size={40} display="block" /> : <Table list={data.list} />}
+        </section>
       </main>
     </Page>
   );
