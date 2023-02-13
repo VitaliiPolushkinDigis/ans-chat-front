@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { API_AC_TYPES, getConversationMessages } from '../utils/api';
 import { ConversationMessage, MessageEventPayload, MessageType } from '../utils/types';
+import { RootState } from './store';
 import { ACPayload } from './types';
 
 export interface MessageState {
@@ -15,12 +16,21 @@ const initialState: MessageState = {
   error: false,
 };
 
-export const fetchMessages = (id: number): PayloadAction<ACPayload> => {
-  return {
-    type: `messages/GET_MESSAGES${API_AC_TYPES.REQUESTED}`,
-    payload: {
-      promise: () => getConversationMessages(id),
-    },
+export const fetchMessages = (id: number) => {
+  return async (dispatch: Dispatch, getState?: () => RootState) => {
+    try {
+      dispatch({ type: `conversations/GET_MESSAGES${API_AC_TYPES.REQUESTED}` });
+      const conv = await getConversationMessages(id);
+      dispatch({
+        type: `messages/GET_MESSAGES_SUCCESSFUL`,
+        payload: conv,
+      });
+    } catch (error) {
+      dispatch({
+        type: `messages/GET_CONVERSATIONS${API_AC_TYPES.REJECTED}`,
+        payload: error,
+      });
+    }
   };
 };
 
