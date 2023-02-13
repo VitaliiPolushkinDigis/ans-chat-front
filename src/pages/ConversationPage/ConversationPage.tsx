@@ -3,7 +3,7 @@ import { FC, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import ConversationSidebar from '../../components/ConversationSidebar/ConversationSidebar';
 import Page from '../../components/layouts/Page/Page';
-import { fetchConversations } from '../../store/conversationSlice';
+import { fetchConversationsThunk } from '../../store/conversationSlice';
 import { useAppDispatch, useTypedSelector } from '../../store/store';
 
 const ConversationPage = () => {
@@ -12,7 +12,7 @@ const ConversationPage = () => {
   const { conversations } = useTypedSelector((state) => state.conversations);
 
   useEffect(() => {
-    dispatch(fetchConversations());
+    const data = dispatch(fetchConversationsThunk());
   }, []);
 
   return (
