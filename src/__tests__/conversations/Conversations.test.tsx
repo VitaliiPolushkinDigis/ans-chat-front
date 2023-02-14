@@ -15,7 +15,7 @@ const mockedUser: User = {
 
 jest.mock('../../utils/api');
 
-describe('loginThunk', () => {
+describe('test middleware', () => {
   it('request call dispatch 2 times', async () => {
     const thunkMy = fetchConversationsThunk();
     const dispatchMock = jest.fn();
