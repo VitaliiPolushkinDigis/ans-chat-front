@@ -13,8 +13,8 @@ const Table = ({ list }: Props) => {
           <tr>
             <th>#</th>
             <th>{ProfileEnum.id}</th>
-            <th>{ProfileEnum.title}</th>
-            <th>{ProfileEnum.albumId}</th>
+            <th>{ProfileEnum.FullName}</th>
+            <th>{ProfileEnum.userId}</th>
             <th>{ProfileEnum.thumbnailUrl}</th>
           </tr>
         </thead>
@@ -25,12 +25,12 @@ const Table = ({ list }: Props) => {
                 <tr key={item?.id}>
                   <td>{index + 1}</td>
                   <td>{item?.id}</td>
-                  <td>{item?.title}</td>
-                  <td>{item?.albumId}</td>
+                  <td>{`${item?.firstName} ${item?.lastName}`}</td>
+                  <td>{index + 1}</td>
                   <td>
                     <img
                       src={item?.thumbnailUrl}
-                      alt={item?.title}
+                      alt={item?.firstName}
                       width={50}
                       height={50}
                       loading="lazy"

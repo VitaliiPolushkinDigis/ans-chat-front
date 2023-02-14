@@ -4,9 +4,10 @@ export type LengthCountType = {
 };
 
 export type ProfileType = {
-  albumId: number | string;
+  userId: number | string;
   id: number | string;
-  title: string;
+  firstName: string;
+  lastName: string;
   url: string;
   thumbnailUrl: string;
 };

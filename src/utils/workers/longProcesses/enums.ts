@@ -4,9 +4,9 @@ export enum processList {
 }
 
 export enum ProfileEnum {
-  albumId = 'Album Id',
+  userId = 'User Id',
   id = 'ID',
-  title = 'Title',
+  FullName = 'Full Name',
   url = 'Url',
   thumbnailUrl = 'Thumbnail',
 }
