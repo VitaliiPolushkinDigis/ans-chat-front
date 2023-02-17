@@ -1,3 +1,5 @@
+import { Period } from './enums';
+
 export type LengthCountType = {
   loading: boolean;
   value: number;
@@ -20,7 +22,7 @@ export type PofileListType = {
 
 export type GetDataType = {
   action: string;
-  period: 'initial' | 'next' | 'prev' | 'pageNumber';
+  period: Period;
   thePageNumber: number;
 };
 
