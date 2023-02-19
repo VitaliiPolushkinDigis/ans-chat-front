@@ -109,6 +109,7 @@ export const MessageContainer: FC<Props> = () => {
     display: none;
   } */
       }}
+      data-attr="messages-list"
     >
       {formatMessages()}
     </Grid>

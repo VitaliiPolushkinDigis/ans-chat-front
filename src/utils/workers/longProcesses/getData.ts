@@ -11,7 +11,6 @@ self.onmessage = (e: MessageEvent<string>) => {
 
   if (data.period === 'initial') {
     const items = profiles.filter((item, i) => i < defaultListPageSize);
-    console.log('sdfsd');
 
     const response = {
       loading: false,

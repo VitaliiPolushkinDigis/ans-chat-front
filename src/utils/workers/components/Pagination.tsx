@@ -27,7 +27,7 @@ const Pagination = ({ page, pages, pageClick, prevHandler, nextHandler }: Props)
           );
         })}
       </ul>
-      <button className="next" onClick={nextHandler} disabled={page === pages}>
+      <button data-attr="next" className="next" onClick={nextHandler} disabled={page === pages}>
         Next
       </button>
     </div>
