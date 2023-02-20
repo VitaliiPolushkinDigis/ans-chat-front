@@ -25,6 +25,11 @@ const ConversationSidebar: FC = ({}) => {
       width={'360px'}
       bgcolor={'#fafafa'}
     >
+      <Typography component="h3" variant="h3">
+        <Link data-attr="user-link" to="/test">
+          Users
+        </Link>
+      </Typography>
       <SimpleModal open={showModal} handleClose={() => setShowModal(false)} padding="20px">
         <CreateNewConversationForm />
       </SimpleModal>
@@ -41,6 +46,7 @@ const ConversationSidebar: FC = ({}) => {
           <Box sx={{ padding: '8px', display: 'flex', alignItems: 'center' }}>
             <Box
               sx={{ borderRadius: '50%', width: '36px', height: '36px', background: '#3a9' }}
+              data-attr="avatar"
             ></Box>
             <Box>
               <Typography>

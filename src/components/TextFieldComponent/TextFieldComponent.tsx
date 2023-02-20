@@ -73,6 +73,7 @@ interface TextFieldProps {
   buttonProps?: SideButtonProps;
   /*   emojiPickerProps?: EmojiPickerProps; */
   inputRef?: BaseTextFieldProps['inputRef'];
+  dataAttr?: string;
 }
 
 // eslint-disable-next-line react/display-name
@@ -103,6 +104,7 @@ export const TextFieldComponent = forwardRef<HTMLInputElement, TextFieldProps>(
       buttonProps,
       /*  emojiPickerProps, */
       inputRef,
+      dataAttr,
     },
     ref,
   ) => {
@@ -296,6 +298,7 @@ export const TextFieldComponent = forwardRef<HTMLInputElement, TextFieldProps>(
           }}
           ref={ref}
           inputRef={inputRef}
+          data-attr={dataAttr}
         />
       </WithFlexWrapper>
     );

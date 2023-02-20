@@ -33,9 +33,8 @@ const RegisterForm: FC<RegisterFormProps> = () => {
       await postRegisterUser(data).then(() => {
         addToast('Registered Successfully', { appearance: 'success' });
       });
-    } catch (error) {
-      console.log(error);
-      addToast('Register Unsuccessfully', { appearance: 'error' });
+    } catch (error: any) {
+      addToast(error.response.data.message, { appearance: 'error' });
     }
   };
 
@@ -53,6 +52,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           fullWidth
           helperText
           label="Your Email"
+          dataAttr="email"
         />
       </Grid>
       <Grid container spacing={1}>
@@ -68,6 +68,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
             fullWidth
             helperText
             label="Your Name"
+            dataAttr="firstName"
           />
         </Grid>
         <Grid item xs={6}>
@@ -82,6 +83,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
             fullWidth
             helperText
             label="Your Lastname"
+            dataAttr="lastName"
           />
         </Grid>
       </Grid>
@@ -97,6 +99,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           fullWidth
           helperText
           label="Your password"
+          dataAttr="password"
         />
       </Grid>
       <Grid>
@@ -111,9 +114,17 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           fullWidth
           helperText
           label="Your password"
+          dataAttr="password-repeat"
         />
       </Grid>
-      <Button type="submit" variant="contained" color="primary" size="large" fullWidth>
+      <Button
+        data-attr="submit"
+        type="submit"
+        variant="contained"
+        color="primary"
+        size="large"
+        fullWidth
+      >
         Submit
       </Button>
       <Button

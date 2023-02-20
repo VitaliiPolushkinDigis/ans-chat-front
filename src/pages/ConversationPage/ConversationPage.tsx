@@ -19,7 +19,7 @@ const ConversationPage = () => {
     <Page>
       <ConversationSidebar />
       {!params.id && (
-        <Typography sx={{ marginLeft: '360px' }}>
+        <Typography sx={{ marginLeft: '360px' }} data-attr="conversation-content">
           Select the chat to see the conversation
         </Typography>
       )}

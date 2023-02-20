@@ -10,3 +10,10 @@ export enum ProfileEnum {
   url = 'Url',
   thumbnailUrl = 'Thumbnail',
 }
+
+export enum Period {
+  initial = 'initial',
+  next = 'next',
+  prev = 'prev',
+  pageNumber = 'pageNumber',
+}

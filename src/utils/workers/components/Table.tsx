@@ -26,7 +26,7 @@ const Table = ({ list }: Props) => {
                   <td>{index + 1}</td>
                   <td>{item?.id}</td>
                   <td>{`${item?.firstName} ${item?.lastName}`}</td>
-                  <td>{index + 1}</td>
+                  <td>{item?.id}</td>
                   <td>
                     <img
                       src={item?.thumbnailUrl}

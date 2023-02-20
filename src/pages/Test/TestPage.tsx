@@ -5,9 +5,15 @@ import Page from '../../components/layouts/Page/Page';
 import { useTypedSelector } from '../../store/store';
 import { addTest, getTodoAC } from '../../store/testSlice';
 import Loader from '../../utils/workers/components/Loader';
+import Pagination from '../../utils/workers/components/Pagination';
 import Table from '../../utils/workers/components/Table';
-import { processList } from '../../utils/workers/longProcesses/enums';
-import { PofileListType, GetDataType, ProfileType } from '../../utils/workers/longProcesses/types';
+import { Period, processList } from '../../utils/workers/longProcesses/enums';
+import {
+  PofileListType,
+  GetDataType,
+  ProfileType,
+  defaultListPageSize,
+} from '../../utils/workers/longProcesses/types';
 
 interface TestPageProps {}
 
@@ -18,14 +24,52 @@ const TestPage: FC<TestPageProps> = () => {
     dispatch(getTodoAC({ id: '5' }));
   };
 
-  console.log('loading', loading);
-
   const [lengthCount, setLengthCount] = useState({ loading: true, value: 0 });
   const [data, setData] = useState<PofileListType>({
     loading: true,
     list: [],
     page: 1,
   });
+
+  const handlePageNumber = (pageNumber: number) => {
+    if (window.Worker) {
+      const request = {
+        action: processList.getData,
+        period: Period.pageNumber,
+        thePageNumber: pageNumber,
+      };
+
+      getData.postMessage(JSON.stringify(request));
+    }
+  };
+  const prevHandler = (pageNumber: number) => {
+    if (data.page === 1) {
+      return;
+    }
+
+    if (window.Worker) {
+      const request = {
+        action: processList.getData,
+        period: Period.prev,
+        thePageNumber: pageNumber - 1,
+      } as GetDataType;
+
+      getData.postMessage(JSON.stringify(request));
+    }
+  };
+  const nextHandler = (userSelectedPage: number, thePageLength: number) => {
+    if (userSelectedPage < thePageLength) {
+      if (window.Worker) {
+        const request = {
+          action: processList.getData,
+          period: Period.next,
+          thePageNumber: userSelectedPage + 1,
+        } as GetDataType;
+
+        getData.postMessage(JSON.stringify(request));
+      }
+    }
+  };
 
   const counter: Worker = useMemo(
     () => new Worker(new URL('../../utils/workers/longProcesses/count.ts', import.meta.url)),
@@ -56,18 +100,20 @@ const TestPage: FC<TestPageProps> = () => {
   }, [counter]);
 
   useEffect(() => {
+    //get data on initial render
     if (window.Worker) {
-      const requiest = {
+      const request = {
         action: processList.getData,
         period: 'initial',
         thePageNumber: data.page,
       } as GetDataType;
 
-      getData.postMessage(JSON.stringify(requiest));
+      getData.postMessage(JSON.stringify(request));
     }
   }, []);
 
   useEffect(() => {
+    //handle receiving response from getData worker
     if (window.Worker) {
       getData.onmessage = (e: MessageEvent<string>) => {
         const response = JSON.parse(e.data) as PofileListType;
@@ -81,8 +127,6 @@ const TestPage: FC<TestPageProps> = () => {
       };
     }
   }, [getData]);
-
-  console.log('lengthCount', lengthCount);
 
   return (
     <Page display="flex">
@@ -105,7 +149,27 @@ const TestPage: FC<TestPageProps> = () => {
           </b>
         </section>
         <section className="table-container">
-          {data.loading ? <Loader size={40} display="block" /> : <Table list={data.list} />}
+          {data.loading ? (
+            <Loader size={40} display="block" />
+          ) : (
+            <>
+              <Pagination
+                page={data.page}
+                pages={lengthCount.value / defaultListPageSize}
+                pageClick={(pageNumber) => handlePageNumber(pageNumber)}
+                prevHandler={() => prevHandler(data.page)}
+                nextHandler={() => nextHandler(data.page, lengthCount.value / defaultListPageSize)}
+              />
+              <Table list={data.list} />
+              <Pagination
+                page={data.page}
+                pages={lengthCount.value / defaultListPageSize}
+                pageClick={(pageNumber) => handlePageNumber(pageNumber)}
+                prevHandler={() => prevHandler(data.page)}
+                nextHandler={() => nextHandler(data.page, lengthCount.value / defaultListPageSize)}
+              />
+            </>
+          )}
         </section>
       </main>
     </Page>

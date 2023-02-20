@@ -39,8 +39,9 @@ export const MessageInputField: FC<MessageInputFieldProps> = ({
             margin: '4px 0',
             resize: 'none',
           }}
+          data-attr="msg-input"
         />
-        <Button type="submit" color="primary" variant="contained">
+        <Button data-attr="send-btn" type="submit" color="primary" variant="contained">
           Send
         </Button>
       </form>

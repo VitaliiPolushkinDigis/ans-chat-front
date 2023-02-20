@@ -41,7 +41,7 @@ const LoginForm: FC<LoginFormProps> = () => {
   };
 
   return (
-    <form className={styles.registerForm} onSubmit={handleSubmit}>
+    <form className={styles.registerForm} onSubmit={handleSubmit} data-attr="form">
       <Grid>
         <TextFieldComponent
           placeholder="Your email"
@@ -54,6 +54,7 @@ const LoginForm: FC<LoginFormProps> = () => {
           fullWidth
           helperText
           label="Your Email"
+          dataAttr="email"
         />
       </Grid>
       <Grid>
@@ -68,9 +69,17 @@ const LoginForm: FC<LoginFormProps> = () => {
           fullWidth
           helperText
           label="Your password"
+          dataAttr="password"
         />
       </Grid>
-      <Button type="submit" variant="contained" color="primary" size="large" fullWidth>
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        size="large"
+        fullWidth
+        data-attr="submit"
+      >
         Submit
       </Button>
       <Button
@@ -84,7 +93,9 @@ const LoginForm: FC<LoginFormProps> = () => {
         Reset
       </Button>
       <Typography>
-        <Link to="/register">Don't have an account? Register.</Link>
+        <Link data-attr="register-link" to="/register">
+          Don't have an account? Register.
+        </Link>
       </Typography>
     </form>
   );
