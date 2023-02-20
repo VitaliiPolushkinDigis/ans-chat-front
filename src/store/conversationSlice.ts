@@ -17,15 +17,6 @@ const initialState: ConversationState = {
   messages: [],
 };
 
-export const fetchConversations = (): PayloadAction<ACPayload> => {
-  return {
-    type: `conversations/GET_CONVERSATIONS${API_AC_TYPES.REQUESTED}`,
-    payload: {
-      promise: () => getConversations(),
-    },
-  };
-};
-
 export const fetchConversationsRequest = () => ({
   type: `conversations/GET_CONVERSATIONS_REQUESTED`,
 });

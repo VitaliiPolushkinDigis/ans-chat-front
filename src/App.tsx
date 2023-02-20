@@ -47,7 +47,7 @@ function App() {
           <Route path="register" element={<AuthenticationPage />}></Route>
           <Route path="login" element={<LoginPage />}></Route>
           <Route path="" element={<LoginPage />}></Route>
-          <Route path="/" element={<LoginPage />}></Route>
+
           <Route
             path="conversations"
             element={

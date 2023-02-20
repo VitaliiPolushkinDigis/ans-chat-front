@@ -2,7 +2,6 @@ import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { API_AC_TYPES, getConversationMessages } from '../utils/api';
 import { ConversationMessage, MessageEventPayload, MessageType } from '../utils/types';
 import { RootState } from './store';
-import { ACPayload } from './types';
 
 export interface MessageState {
   messages: ConversationMessage[];
