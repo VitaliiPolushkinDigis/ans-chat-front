@@ -1,28 +1,26 @@
-import { addListener } from '@reduxjs/toolkit';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Page from '../../components/layouts/Page/Page';
-import { useTypedSelector } from '../../store/store';
-import { addTest, getTodoAC } from '../../store/testSlice';
 import Loader from '../../utils/workers/components/Loader';
 import Pagination from '../../utils/workers/components/Pagination';
 import Table from '../../utils/workers/components/Table';
 import { Period, processList } from '../../utils/workers/longProcesses/enums';
 import {
-  PofileListType,
-  GetDataType,
-  ProfileType,
   defaultListPageSize,
+  GetDataType,
+  PofileListType,
 } from '../../utils/workers/longProcesses/types';
 
 interface TestPageProps {}
 
 const TestPage: FC<TestPageProps> = () => {
-  const { test, loading } = useTypedSelector((state) => state.test);
-  const dispatch = useDispatch();
-  const updateTest = () => {
-    dispatch(getTodoAC({ id: '5' }));
-  };
+  const counter: Worker = useMemo(
+    () => new Worker(new URL('../../utils/workers/longProcesses/count.ts', import.meta.url)),
+    [],
+  );
+  const getData: Worker = useMemo(
+    () => new Worker(new URL('../../utils/workers/longProcesses/getData.ts', import.meta.url)),
+    [],
+  );
 
   const [lengthCount, setLengthCount] = useState({ loading: true, value: 0 });
   const [data, setData] = useState<PofileListType>({
@@ -70,16 +68,6 @@ const TestPage: FC<TestPageProps> = () => {
       }
     }
   };
-
-  const counter: Worker = useMemo(
-    () => new Worker(new URL('../../utils/workers/longProcesses/count.ts', import.meta.url)),
-    [],
-  );
-
-  const getData: Worker = useMemo(
-    () => new Worker(new URL('../../utils/workers/longProcesses/getData.ts', import.meta.url)),
-    [],
-  );
 
   useEffect(() => {
     if (window.Worker) {
@@ -130,16 +118,9 @@ const TestPage: FC<TestPageProps> = () => {
 
   return (
     <Page display="flex">
-      <div>{test}</div>
-      <div>
-        <button onClick={updateTest}>Test</button>
-      </div>
-      {loading && <h1>loading</h1>}
-      <br />
-
       <main className="main-container">
         <section className="count">
-          Total count of Profiles is
+          Total count of Profiles is {''}
           <b>
             {lengthCount.loading ? (
               <Loader size={14} display="inline-block" color="black" />

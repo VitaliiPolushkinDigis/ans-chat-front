@@ -27,7 +27,7 @@ const ConversationSidebar: FC = ({}) => {
     >
       <Typography component="h3" variant="h3">
         <Link data-attr="user-link" to="/test">
-          Users
+          Worker
         </Link>
       </Typography>
       <SimpleModal open={showModal} handleClose={() => setShowModal(false)} padding="20px">
