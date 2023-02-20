@@ -35,18 +35,6 @@ export const postNewMessage = (data: CreateMessageParams) => {
   axios.post(`${API_URL}/messages`, data, config);
 };
 
-export const getTodo = (id: string) => {
-  return axios.get(`https://jsonplaceholder.typicode.com/todos/${id}`, config);
-};
-export const getMock = (data: any) => {
-  return axios.get(`https://jsonplaceholder.typicode.com/todos/${data.id}`, config);
-};
-
-export const serviceApi = {
-  getTodo,
-  getMock,
-};
-
 export const API_AC_TYPES = {
   REQUESTED: '_REQUESTED',
   SUCCESSFUL: '_SUCCESSFUL',
