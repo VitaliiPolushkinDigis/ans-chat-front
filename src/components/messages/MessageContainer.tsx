@@ -98,7 +98,7 @@ export const MessageContainer: FC<Props> = () => {
   return (
     <Grid
       style={{
-        height: 'calc(100% - 100px)',
+        height: 'calc(100% - 106px)',
         boxSizing: 'border-box',
         padding: ' 10px 0',
         display: 'flex',
