@@ -12,7 +12,7 @@ export const API_URL = process.env.REACT_APP_API_URL;
 const config: AxiosRequestConfig = {
   withCredentials: true,
   headers: {
-    'Access-Control-Allow-Origin': 'https://blind-talk-45cf3c6146cc.herokuapp.com',
+    'Access-Control-Allow-Origin': 'https://ans-chat-front.vercel.app',
     'Content-Type': 'application/json',
   },
 };
