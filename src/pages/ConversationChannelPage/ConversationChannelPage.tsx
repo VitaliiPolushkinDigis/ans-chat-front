@@ -23,7 +23,7 @@ const ConversationChannelPage: FC<ConversationChannelPageProps> = () => {
   useEffect(() => {
     socket.on('connected', () => console.log('Connected'));
     socket.on('onMessage', (payload: MessageEventPayload) => {
-      console.log('Message Received');
+      console.log('Message Received', payload);
       const { conversation, ...message } = payload;
       dispatch(addMessage(payload));
     });
