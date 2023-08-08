@@ -5,6 +5,11 @@ export type ConversationType = {
   createdAt: Date | string;
 };
 
+export type ConversationMessage = {
+  id: number;
+  messages: MessageType[];
+};
+
 export type CreateUserParams = {
   email: string;
   firstName: string;
@@ -27,6 +32,11 @@ export type MessageType = {
   content: string;
   createdAt: string;
   author: User;
+};
+
+export type FetchMessagePayload = {
+  id: number;
+  messages: MessageType[];
 };
 
 export type MessageEventPayload = {

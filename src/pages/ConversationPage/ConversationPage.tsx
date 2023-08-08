@@ -1,33 +1,25 @@
 import { Typography } from '@mui/material';
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import ConversationSidebar from '../../components/ConversationSidebar/ConversationSidebar';
 import Page from '../../components/layouts/Page/Page';
-import { getConversations } from '../../utils/api';
-import { AuthContext } from '../../utils/context/AuthContext';
-import { conversations } from '../../utils/mocks';
-import { ConversationType } from '../../utils/types';
+import { fetchConversationsThunk } from '../../store/conversationSlice';
+import { useAppDispatch, useTypedSelector } from '../../store/store';
 
-interface ConversationPageProps {}
-
-const ConversationPage: FC<ConversationPageProps> = () => {
+const ConversationPage = () => {
   const params = useParams();
-
-  const [conversations, setConversations] = useState<ConversationType[]>([]);
+  const dispatch = useAppDispatch();
+  const { conversations } = useTypedSelector((state) => state.conversations);
 
   useEffect(() => {
-    getConversations()
-      .then(({ data }) => {
-        setConversations(data);
-      })
-      .catch((err) => console.log(err));
+    const data = dispatch(fetchConversationsThunk());
   }, []);
 
   return (
     <Page>
-      <ConversationSidebar conversations={conversations} />
+      <ConversationSidebar />
       {!params.id && (
-        <Typography sx={{ marginLeft: '360px' }}>
+        <Typography sx={{ marginLeft: '360px' }} data-attr="conversation-content">
           Select the chat to see the conversation
         </Typography>
       )}

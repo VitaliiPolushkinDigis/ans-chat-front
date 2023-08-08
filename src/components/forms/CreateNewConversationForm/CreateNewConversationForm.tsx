@@ -1,4 +1,4 @@
-import { Button, FormControl, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -6,9 +6,7 @@ import { addConversation } from '../../../store/conversationSlice';
 import { TextFieldComponent } from '../../TextFieldComponent/TextFieldComponent';
 import { classes } from './CreateNewConversationForm.helper';
 
-interface CreateNewConversationFormProps {}
-
-const CreateNewConversationForm: FC<CreateNewConversationFormProps> = ({}) => {
+const CreateNewConversationForm: FC = () => {
   const dispatch = useDispatch();
   const { handleBlur, handleSubmit, setFieldTouched, values, handleChange, errors, resetForm } =
     useFormik({

@@ -2,19 +2,18 @@ import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { FC, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTypedSelector } from '../../store/store';
 import { AuthContext } from '../../utils/context/AuthContext';
 import { ConversationType } from '../../utils/types';
 import CreateNewConversationForm from '../forms/CreateNewConversationForm/CreateNewConversationForm';
 import SimpleModal from '../modals/SimpleModal';
 import ConversationCreateBtn from './ConversationCreateBtn/ConversationCreateBtn';
 
-interface ConversationSidebarProps {
-  conversations: ConversationType[];
-}
-
-const ConversationSidebar: FC<ConversationSidebarProps> = ({ conversations }) => {
+const ConversationSidebar: FC = ({}) => {
   const [showModal, setShowModal] = useState(false);
   const { user } = useContext(AuthContext);
+
+  const { conversations } = useTypedSelector((state) => state.conversations);
 
   const getDisplayUser = (conversation: ConversationType) => {
     return conversation.creator.id === user?.id ? conversation.recipient : conversation.creator;
@@ -26,6 +25,11 @@ const ConversationSidebar: FC<ConversationSidebarProps> = ({ conversations }) =>
       width={'360px'}
       bgcolor={'#fafafa'}
     >
+      <Typography component="h3" variant="h3">
+        <Link data-attr="user-link" to="/test">
+          Worker
+        </Link>
+      </Typography>
       <SimpleModal open={showModal} handleClose={() => setShowModal(false)} padding="20px">
         <CreateNewConversationForm />
       </SimpleModal>
@@ -42,6 +46,7 @@ const ConversationSidebar: FC<ConversationSidebarProps> = ({ conversations }) =>
           <Box sx={{ padding: '8px', display: 'flex', alignItems: 'center' }}>
             <Box
               sx={{ borderRadius: '50%', width: '36px', height: '36px', background: '#3a9' }}
+              data-attr="avatar"
             ></Box>
             <Box>
               <Typography>

@@ -3,10 +3,10 @@ import { Box, Grid } from '@mui/material';
 import { FC, useContext, useEffect } from 'react';
 import { AuthContext } from '../../utils/context/AuthContext';
 import { MessageType, User } from '../../utils/types';
+import { useTypedSelector } from '../../store/store';
+import { useParams } from 'react-router-dom';
 
-type Props = {
-  messages: MessageType[];
-};
+type Props = {};
 
 type FormattedMessageProps = {
   user?: User;
@@ -20,6 +20,7 @@ export const FormattedMessage: FC<FormattedMessageProps> = ({ user, message }) =
         gap: '20px',
         alignItems: 'center',
         padding: '5px 0',
+        wordBreak: 'break-all',
       }}
     >
       <Box
@@ -53,13 +54,18 @@ export const FormattedMessage: FC<FormattedMessageProps> = ({ user, message }) =
   );
 };
 
-export const MessageContainer: FC<Props> = ({ messages }) => {
+export const MessageContainer: FC<Props> = () => {
   const { user } = useContext(AuthContext);
+  const { id } = useParams();
+  const conversationMessages = useTypedSelector((state) => state.messages.messages);
 
   const formatMessages = () => {
-    //CHECK IT
+    const currentConversationMessages = conversationMessages.find((m) => m.id === parseInt(id!));
+    if (!currentConversationMessages) {
+      return [];
+    }
 
-    return messages.map((m, index, arr) => {
+    return currentConversationMessages?.messages.map((m, index: number, arr) => {
       const nextIndex = index + 1;
       const currentMessage = arr[index];
       const nextMessage = arr[nextIndex];
@@ -92,7 +98,7 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
   return (
     <Grid
       style={{
-        height: 'calc(100% - 100px)',
+        height: 'calc(100% - 106px)',
         boxSizing: 'border-box',
         padding: ' 10px 0',
         display: 'flex',
@@ -103,6 +109,7 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
     display: none;
   } */
       }}
+      data-attr="messages-list"
     >
       {formatMessages()}
     </Grid>

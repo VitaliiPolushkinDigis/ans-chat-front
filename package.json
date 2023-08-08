@@ -15,33 +15,41 @@
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
+    "@types/moxios": "^0.4.15",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "axios": "^0.27.2",
+    "axios-mock-adapter": "^1.21.2",
     "date-fns": "^2.29.3",
+    "eslint": "^8.0.1",
     "formik": "^2.2.9",
+    "moxios": "^0.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-toast-notifications": "^2.5.1",
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^2.4.2",
+    "sinon": "^15.0.1",
     "socket.io-client": "^4.5.2",
-    "typescript": "^4.4.2",
+    "typescript": "*",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --verbose ./__tests__",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "test:e2e": "cypress run --headed"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": []
   },
   "browserslist": {
     "production": [
@@ -56,6 +64,7 @@
     ]
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0"
+    "@types/axios": "^0.14.0",
+    "cypress": "^12.6.0"
   }
 }

@@ -1,17 +1,12 @@
-import React, { FC, forwardRef, ReactNode, useCallback, useMemo, useState } from 'react';
 import {
+  BaseTextFieldProps,
   Box,
   Button,
   InputAdornment,
   TextField,
   Typography,
-  BaseTextFieldProps,
 } from '@mui/material';
-
-/* import { theme } from '../../../theme';
-import { EmojiPicker } from '../Emoji/EmojiPicker';
-import { EmojiPickerButton } from '../Emoji/EmojiPickerButton';
-import { Emoji } from '../Emoji/Emoji'; */
+import React, { FC, forwardRef, ReactNode, useCallback, useMemo } from 'react';
 
 export enum AdornmentPosition {
   Start = 'start',
@@ -78,8 +73,10 @@ interface TextFieldProps {
   buttonProps?: SideButtonProps;
   /*   emojiPickerProps?: EmojiPickerProps; */
   inputRef?: BaseTextFieldProps['inputRef'];
+  dataAttr?: string;
 }
 
+// eslint-disable-next-line react/display-name
 export const TextFieldComponent = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
@@ -91,7 +88,7 @@ export const TextFieldComponent = forwardRef<HTMLInputElement, TextFieldProps>(
       setFieldTouched,
       onChange,
       onEnterPress,
-      onBlur = () => {},
+      onBlur = () => ({}),
       autocapitalize = false,
       disabled = false,
       fullWidth = false,
@@ -107,6 +104,7 @@ export const TextFieldComponent = forwardRef<HTMLInputElement, TextFieldProps>(
       buttonProps,
       /*  emojiPickerProps, */
       inputRef,
+      dataAttr,
     },
     ref,
   ) => {
@@ -300,6 +298,7 @@ export const TextFieldComponent = forwardRef<HTMLInputElement, TextFieldProps>(
           }}
           ref={ref}
           inputRef={inputRef}
+          data-attr={dataAttr}
         />
       </WithFlexWrapper>
     );
