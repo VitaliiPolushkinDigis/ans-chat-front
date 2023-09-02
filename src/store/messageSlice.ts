@@ -1,10 +1,10 @@
-import { createSlice, current, Dispatch, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import { API_AC_TYPES, getConversationMessages } from '../utils/api';
 import { ConversationMessage, MessageEventPayload, MessageType } from '../utils/types';
 import { RootState } from './store';
 
 export interface MessageState {
-  messages: any[];
+  messages: ConversationMessage[];
   loading: boolean;
   error: boolean;
 }
@@ -39,12 +39,8 @@ export const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, action: PayloadAction<MessageEventPayload>) => {
       const { conversation, ...message } = action.payload;
-      console.log(message, current(state));
-      const copy = [...state.messages];
-      copy[0].unshift(message);
-      state.messages = copy;
-      /*   const conversationMessage = state.messages.find((cm) => cm.id === conversation.id);
-      conversationMessage?.messages.unshift(message); */
+      const conversationMessage = state.messages.find((cm) => cm.id === conversation.id);
+      conversationMessage?.messages.unshift(message);
     },
     GET_MESSAGES_SUCCESSFUL: (state, action) => {
       /* action.payload.data.forEach((c: ConversationType) => state.conversations.set(c.id, c)); */
