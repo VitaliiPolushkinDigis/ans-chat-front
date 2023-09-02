@@ -1,6 +1,6 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC /* , useEffect, useMemo, useState */ } from 'react';
 import Page from '../../components/layouts/Page/Page';
-import Loader from '../../utils/workers/components/Loader';
+/* import Loader from '../../utils/workers/components/Loader';
 import Pagination from '../../utils/workers/components/Pagination';
 import Table from '../../utils/workers/components/Table';
 import { Period, processList } from '../../utils/workers/longProcesses/enums';
@@ -8,12 +8,12 @@ import {
   defaultListPageSize,
   GetDataType,
   PofileListType,
-} from '../../utils/workers/longProcesses/types';
+} from '../../utils/workers/longProcesses/types'; */
 
 interface TestPageProps {}
 
 const TestPage: FC<TestPageProps> = () => {
-  const counter: Worker = useMemo(
+  /*  const counter: Worker = useMemo(
     () => new Worker(new URL('../../utils/workers/longProcesses/count.ts', import.meta.url)),
     [],
   );
@@ -114,11 +114,11 @@ const TestPage: FC<TestPageProps> = () => {
         }));
       };
     }
-  }, [getData]);
+  }, [getData]); */
 
   return (
     <Page display="flex">
-      <main className="main-container">
+      {/*  <main className="main-container">
         <section className="count">
           Total count of Profiles is {''}
           <b>
@@ -152,7 +152,7 @@ const TestPage: FC<TestPageProps> = () => {
             </>
           )}
         </section>
-      </main>
+      </main> */}
     </Page>
   );
 };
