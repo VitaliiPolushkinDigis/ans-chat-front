@@ -60,7 +60,12 @@ export const MessageContainer: FC<Props> = () => {
   const conversationMessages = useTypedSelector((state) => state.messages.messages);
 
   const formatMessages = () => {
-    const currentConversationMessages = conversationMessages.find((m) => m.id === parseInt(id!));
+    console.log('conversationMessages', conversationMessages);
+
+    return conversationMessages[0]?.map((m: any) => (
+      <FormattedMessage key={m.id} user={user} message={m} />
+    ));
+    /*    const currentConversationMessages = conversationMessages.find((m) => m.id === parseInt(id!));
     if (!currentConversationMessages) {
       return [];
     }
@@ -88,7 +93,7 @@ export const MessageContainer: FC<Props> = () => {
         );
       }
       return <FormattedMessage key={m.id} user={user} message={m} />;
-    });
+    }); */
   };
 
   useEffect(() => {
