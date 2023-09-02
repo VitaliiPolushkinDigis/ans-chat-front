@@ -39,7 +39,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "set PORT=3000 && react-scripts start",
+    "start": "npm install -g serve && serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test --verbose ./__tests__",
     "eject": "react-scripts eject",
