@@ -1,4 +1,4 @@
-import { profiles } from '../data';
+/* import { profiles } from '../data'; */
 import { Period, processList } from './enums';
 import { defaultListPageSize, GetDataType, PofileListType } from './types';
 
@@ -10,7 +10,7 @@ self.onmessage = (e: MessageEvent<string>) => {
   }
 
   if (data.period === 'initial') {
-    const items = profiles.filter((item, i) => i < defaultListPageSize);
+    const items: any = []; /* profiles.filter((item, i) => i < defaultListPageSize); */
 
     const response = {
       loading: false,
@@ -22,7 +22,7 @@ self.onmessage = (e: MessageEvent<string>) => {
   }
 
   if (data.period === 'pageNumber' || data.period === 'next' || data.period === 'prev') {
-    const items = profiles.slice(
+    const items = [].slice(
       (data.thePageNumber - 1) * defaultListPageSize,
       data.thePageNumber * defaultListPageSize,
     );
