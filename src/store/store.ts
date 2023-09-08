@@ -1,5 +1,7 @@
 import { Action, AnyAction, configureStore, Middleware, ThunkDispatch } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { authApi, conversationsApi, messagesApi, profilesApi } from '../utils/services/api';
 import conversationsReducer from './conversationSlice';
 import messageReducer from './messageSlice';
 export type CustomMiddleware<
@@ -39,11 +41,23 @@ customMiddleware.withExtraArgument = createApiMiddleware;
 
 export const store = configureStore({
   reducer: {
+    [profilesApi.reducerPath]: profilesApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
+    [messagesApi.reducerPath]: messagesApi.reducer,
+    [conversationsApi.reducerPath]: conversationsApi.reducer,
     messages: messageReducer,
     conversations: conversationsReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(customMiddleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(customMiddleware)
+      .concat(messagesApi.middleware)
+      .concat(conversationsApi.middleware)
+      .concat(authApi.middleware)
+      .concat(profilesApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

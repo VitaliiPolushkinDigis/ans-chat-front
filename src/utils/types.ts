@@ -50,3 +50,7 @@ export type CreateMessageParams = {
   content: string;
   conversationId: number;
 };
+export type UpdateMessageParams = {
+  content: string;
+  messageId: number;
+};

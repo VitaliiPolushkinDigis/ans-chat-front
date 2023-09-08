@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import { useStyles } from '../../../pages/AuthenticationPage/AuthenticationPage.helper';
-import { postLoginUser } from '../../../utils/api';
+import { useLoginMutation } from '../../../utils/services/api';
 import { UserCredentialsParams } from '../../../utils/types';
 import { TextFieldComponent } from '../../TextFieldComponent/TextFieldComponent';
 
@@ -28,16 +28,29 @@ const LoginForm: FC<LoginFormProps> = () => {
   const { handleBlur, handleSubmit, setFieldTouched, values, handleChange, errors, resetForm } =
     formik;
 
+  const [login, { error }] = useLoginMutation();
+
   const submitForm = async (values: UserCredentialsParams) => {
     try {
-      postLoginUser(values).then(() => {
+      login(values).then((res: any) => {
+        console.log(res, error);
+
         addToast('Login Successfully', { appearance: 'success' });
-        navigate('/conversations');
+        navigate('/profiles');
       });
     } catch (error) {
       console.log(error);
       addToast('Login Unsuccessfully', { appearance: 'error' });
     }
+    /*  postLoginUser(values).then(() => {
+
+        addToast('Login Successfully', { appearance: 'success' });
+        navigate('/profile');
+      });
+    } catch (error) {
+      console.log(error);
+      addToast('Login Unsuccessfully', { appearance: 'error' });
+    } */
   };
 
   return (

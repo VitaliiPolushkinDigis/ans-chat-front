@@ -15,6 +15,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store/store';
 import TestPage from './pages/Test/TestPage';
 import { enableMapSet } from 'immer';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 enableMapSet();
 
@@ -53,6 +54,16 @@ function App() {
             element={
               <AuthenticatedRoute>
                 <ConversationPage />
+              </AuthenticatedRoute>
+            }
+          >
+            <Route path=":id" element={<ConversationChannelPage />} />
+          </Route>
+          <Route
+            path="profiles"
+            element={
+              <AuthenticatedRoute>
+                <ProfilePage />
               </AuthenticatedRoute>
             }
           >
