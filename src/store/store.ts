@@ -1,7 +1,13 @@
 import { Action, AnyAction, configureStore, Middleware, ThunkDispatch } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { authApi, conversationsApi, messagesApi, profilesApi } from '../utils/services/api';
+import {
+  authApi,
+  conversationsApi,
+  messagesApi,
+  postsApi,
+  profilesApi,
+} from '../utils/services/api';
 import conversationsReducer from './conversationSlice';
 import messageReducer from './messageSlice';
 export type CustomMiddleware<
@@ -45,6 +51,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [messagesApi.reducerPath]: messagesApi.reducer,
     [conversationsApi.reducerPath]: conversationsApi.reducer,
+    [postsApi.reducerPath]: postsApi.reducer,
     messages: messageReducer,
     conversations: conversationsReducer,
   },
@@ -53,8 +60,7 @@ export const store = configureStore({
       .concat(customMiddleware)
       .concat(messagesApi.middleware)
       .concat(conversationsApi.middleware)
-      .concat(authApi.middleware)
-      .concat(profilesApi.middleware),
+      .concat([authApi.middleware, profilesApi.middleware, postsApi.middleware]),
 });
 
 setupListeners(store.dispatch);

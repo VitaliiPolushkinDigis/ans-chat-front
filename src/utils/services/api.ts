@@ -106,8 +106,35 @@ export const profilesApi = createApi({
     }),
   }),
 });
+export const postsApi = createApi({
+  reducerPath: 'postsApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.REACT_APP_API_URL}/`,
+    prepareHeaders(headers) {
+      return headers;
+    },
+    credentials: 'include',
+  }),
+  tagTypes: ['Posts'],
+  endpoints: (builder) => ({
+    getProfilePosts: builder.query<any[], number>({
+      query: (id: number) => `posts/profile/${id}`,
+      providesTags: ['Posts'],
+    }),
+    createPost: builder.mutation<{ title: string }, any>({
+      query: (data: any) => ({
+        url: `posts`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Posts'],
+    }),
+  }),
+});
 
 export const { useGetConversationsQuery } = conversationsApi;
+export const { useGetProfilePostsQuery, useCreatePostMutation, useLazyGetProfilePostsQuery } =
+  postsApi;
 export const { useGetProfilesQuery, useGetProfileQuery, useLazyGetProfileQuery } = profilesApi;
 export const { useRegisterMutation, useLoginMutation, useStatusQuery, useLazyStatusQuery } =
   authApi;
