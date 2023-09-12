@@ -1,4 +1,12 @@
-import { Button, Grid, Typography } from '@mui/material';
+import {
+  Button,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material';
 import { useFormik } from 'formik';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,7 +22,14 @@ const RegisterForm: FC<RegisterFormProps> = () => {
   const { addToast } = useToasts();
   const styles = useStyles();
   const formik = useFormik({
-    initialValues: { password: '', repeatPassword: '', email: '', firstName: '', lastName: '' },
+    initialValues: {
+      password: '',
+      repeatPassword: '',
+      email: '',
+      firstName: '',
+      lastName: '',
+      sex: 'male',
+    },
     enableReinitialize: true,
     validateOnChange: true,
     validateOnBlur: false,
@@ -117,6 +132,15 @@ const RegisterForm: FC<RegisterFormProps> = () => {
           dataAttr="password-repeat"
         />
       </Grid>
+      <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+      <RadioGroup
+        aria-labelledby="demo-radio-buttons-group-label"
+        defaultValue="male"
+        name="radio-buttons-group"
+      >
+        <FormControlLabel name="sex" value="male" control={<Radio name="sex" />} label="Male" />
+        <FormControlLabel name="sex" value="female" control={<Radio name="sex" />} label="Female" />
+      </RadioGroup>
       <Button
         data-attr="submit"
         type="submit"
