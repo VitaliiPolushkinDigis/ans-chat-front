@@ -4,6 +4,10 @@ export type ConversationType = {
   recipient: User;
   createdAt: Date | string;
 };
+export type CreateConversationParams = {
+  recipientId: number;
+  message: string;
+};
 
 export type ConversationMessage = {
   id: number;

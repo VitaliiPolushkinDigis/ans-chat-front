@@ -1,25 +1,39 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { FC, useContext, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Page from '../../components/layouts/Page/Page';
+import Post from '../../components/Post/Post';
 import { TextFieldComponent } from '../../components/TextFieldComponent/TextFieldComponent';
+import usePrevious from '../../hooks/usePrevious';
 import { AuthContext } from '../../utils/context/AuthContext';
 import {
   useCreatePostMutation,
+  useGetProfilePostsQuery,
   useLazyGetProfilePostsQuery,
   useLazyGetProfileQuery,
 } from '../../utils/services/api';
+import { User } from '../../utils/types';
 /* import { useAuth } from '../../hooks/useAuth'; */
+
+interface PostsProps {
+  user: User;
+}
+
+const Posts: FC<PostsProps> = ({ user }) => {
+  const { data } = useGetProfilePostsQuery(user.id);
+
+  return <>{data?.map((p) => <Post p={p} />) || <Typography>No posts yet</Typography>}</>;
+};
 
 interface ProfilePageProps {}
 
 const ProfilePage: FC<ProfilePageProps> = ({}) => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [getProfile, profile] = useLazyGetProfileQuery();
-  const [getPosts, posts] = useLazyGetProfilePostsQuery();
+
   const [createPost, resulr] = useCreatePostMutation();
-  console.log('user', user, 'profile', profile, posts.data);
 
   const { values, handleChange, handleBlur, setFieldTouched, errors, handleSubmit } = useFormik({
     initialValues: { title: '', description: '', subtitle: '', imgUrl: '' },
@@ -44,7 +58,6 @@ const ProfilePage: FC<ProfilePageProps> = ({}) => {
   useEffect(() => {
     if (user?.id) {
       getProfile(user.id);
-      getPosts(user.id);
     }
   }, []);
 
@@ -55,7 +68,10 @@ const ProfilePage: FC<ProfilePageProps> = ({}) => {
         direction="row"
         style={{ flexWrap: 'inherit', margin: '0 auto', width: '80%' }}
       >
-        <Box style={{ width: '300px', background: 'yellow' }}>Sidebar</Box>
+        <Box style={{ width: '300px', background: 'yellow' }}>
+          Sidebar
+          <Typography onClick={() => navigate('/conversations')}>Conversations</Typography>
+        </Box>
         <Box style={{ width: '100%', background: 'aliceblue' }}>
           {profile && (
             <Box style={{ display: 'flex' }}>
@@ -139,22 +155,12 @@ const ProfilePage: FC<ProfilePageProps> = ({}) => {
                     Create a new post
                   </Button>
                 </form>
-                <Box style={{ marginTop: '40px' }}>
-                  {posts.data?.map((p) => (
-                    <Box style={{ paddingTop: '24px', paddingBottom: '24px' }}>
-                      <Typography fontWeight={700}>{p.title}</Typography>
-                      {p.imgUrl && (
-                        <img style={{ maxWidth: '500px', borderRadius: '12px' }} src={p.imgUrl} />
-                      )}
-                      <Typography>{p.subtitle}</Typography>
-                      <Typography fontWeight={200}>{p.description}</Typography>
-                      <Grid container justifyContent={'space-between'}>
-                        <Typography>Likes: {p.likes}</Typography>
-                        <Typography>Views: {p.views}</Typography>
-                      </Grid>
-                    </Box>
-                  ))}
-                </Box>
+
+                {user?.id && (
+                  <Box style={{ marginTop: '40px' }}>
+                    <Posts user={user} />
+                  </Box>
+                )}
               </Box>
             </Box>
           )}

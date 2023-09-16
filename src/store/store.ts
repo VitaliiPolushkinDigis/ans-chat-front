@@ -7,6 +7,7 @@ import {
   messagesApi,
   postsApi,
   profilesApi,
+  usersApi,
 } from '../utils/services/api';
 import conversationsReducer from './conversationSlice';
 import messageReducer from './messageSlice';
@@ -47,6 +48,7 @@ customMiddleware.withExtraArgument = createApiMiddleware;
 
 export const store = configureStore({
   reducer: {
+    [usersApi.reducerPath]: usersApi.reducer,
     [profilesApi.reducerPath]: profilesApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [messagesApi.reducerPath]: messagesApi.reducer,
@@ -60,7 +62,12 @@ export const store = configureStore({
       .concat(customMiddleware)
       .concat(messagesApi.middleware)
       .concat(conversationsApi.middleware)
-      .concat([authApi.middleware, profilesApi.middleware, postsApi.middleware]),
+      .concat([
+        authApi.middleware,
+        profilesApi.middleware,
+        postsApi.middleware,
+        usersApi.middleware,
+      ]),
 });
 
 setupListeners(store.dispatch);

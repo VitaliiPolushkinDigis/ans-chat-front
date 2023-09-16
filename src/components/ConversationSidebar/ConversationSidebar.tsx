@@ -4,14 +4,18 @@ import { FC, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTypedSelector } from '../../store/store';
 import { AuthContext } from '../../utils/context/AuthContext';
-import { ConversationType } from '../../utils/types';
+import { useGetUsersQuery } from '../../utils/services/api';
+import { ConversationType, User } from '../../utils/types';
 import CreateNewConversationForm from '../forms/CreateNewConversationForm/CreateNewConversationForm';
 import SimpleModal from '../modals/SimpleModal';
+import UserComponent from '../User/User';
 import ConversationCreateBtn from './ConversationCreateBtn/ConversationCreateBtn';
 
 const ConversationSidebar: FC = ({}) => {
   const [showModal, setShowModal] = useState(false);
   const { user } = useContext(AuthContext);
+
+  const { data } = useGetUsersQuery({});
 
   const { conversations } = useTypedSelector((state) => state.conversations);
 
@@ -25,6 +29,9 @@ const ConversationSidebar: FC = ({}) => {
       width={'360px'}
       bgcolor={'#fafafa'}
     >
+      {data?.map((u: User) => (
+        <UserComponent user={u} />
+      ))}
       <Typography component="h3" variant="h3">
         <Link data-attr="user-link" to="/test">
           Worker

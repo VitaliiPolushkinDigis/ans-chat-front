@@ -1,4 +1,5 @@
 import {
+  CreateConversationParams,
   CreateMessageParams,
   CreateUserParams,
   UpdateMessageParams,
@@ -82,9 +83,19 @@ export const conversationsApi = createApi({
     },
     credentials: 'include',
   }),
+  tagTypes: ['Conversations'],
   endpoints: (builder) => ({
     getConversations: builder.query<any, any>({
       query: () => `conversations`,
+      providesTags: ['Conversations'],
+    }),
+    postConversation: builder.mutation({
+      query: (data: CreateConversationParams) => ({
+        url: `conversations`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Conversations'],
     }),
   }),
 });
@@ -131,8 +142,27 @@ export const postsApi = createApi({
     }),
   }),
 });
+export const usersApi = createApi({
+  reducerPath: 'usersApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.REACT_APP_API_URL}/`,
+    prepareHeaders(headers) {
+      return headers;
+    },
+    credentials: 'include',
+  }),
+  tagTypes: ['Users'],
+  endpoints: (builder) => ({
+    getUsers: builder.query<any, any>({
+      query: () => `users`,
+    }),
+    getUser: builder.query<any[], number>({
+      query: (id: number) => `users/${id}`,
+    }),
+  }),
+});
 
-export const { useGetConversationsQuery } = conversationsApi;
+export const { useGetConversationsQuery, usePostConversationMutation } = conversationsApi;
 export const { useGetProfilePostsQuery, useCreatePostMutation, useLazyGetProfilePostsQuery } =
   postsApi;
 export const { useGetProfilesQuery, useGetProfileQuery, useLazyGetProfileQuery } = profilesApi;
@@ -143,3 +173,4 @@ export const {
   usePostMessageMutation,
   useUpdateMessageMutation,
 } = messagesApi;
+export const { useGetUsersQuery, useGetUserQuery } = usersApi;
