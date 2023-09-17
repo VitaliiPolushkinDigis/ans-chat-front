@@ -2,14 +2,14 @@ import { formatRelative } from 'date-fns';
 import { Box, Grid } from '@mui/material';
 import { FC, useContext, useEffect } from 'react';
 import { AuthContext } from '../../utils/context/AuthContext';
-import { MessageType, User } from '../../utils/types';
+import { MessageType, UserWithoutPassword } from '../../utils/types';
 import { useTypedSelector } from '../../store/store';
 import { useParams } from 'react-router-dom';
 
 type Props = {};
 
 type FormattedMessageProps = {
-  user?: User;
+  user?: UserWithoutPassword;
   message: MessageType;
 };
 export const FormattedMessage: FC<FormattedMessageProps> = ({ user, message }) => {

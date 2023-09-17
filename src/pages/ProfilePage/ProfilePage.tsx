@@ -13,11 +13,11 @@ import {
   useLazyGetProfilePostsQuery,
   useLazyGetProfileQuery,
 } from '../../utils/services/api';
-import { User } from '../../utils/types';
+import { UserWithoutPassword } from '../../utils/types';
 /* import { useAuth } from '../../hooks/useAuth'; */
 
 interface PostsProps {
-  user: User;
+  user: UserWithoutPassword;
 }
 
 const Posts: FC<PostsProps> = ({ user }) => {

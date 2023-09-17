@@ -27,8 +27,8 @@ const CreateNewConversationForm: FC = () => {
       dispatch(
         addConversation({
           id: 1,
-          creator: { id: 1, email: '', firstName: '', lastName: '' },
-          recipient: { id: 1, email: '', firstName: '', lastName: '' },
+          creator: { id: 1, email: '', firstName: '', lastName: '', profileId: 1 },
+          recipient: { id: 2, email: '', firstName: '', lastName: '', profileId: 2 },
           createdAt: new Date().toString(),
         }),
       );

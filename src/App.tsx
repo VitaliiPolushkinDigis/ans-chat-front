@@ -10,7 +10,7 @@ import ConversationPage from './pages/ConversationPage/ConversationPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import { AuthContext } from './utils/context/AuthContext';
 import { socket, SocketContext } from './utils/context/SocketContext';
-import { User } from './utils/types';
+import { UserWithoutPassword } from './utils/types';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store/store';
 import TestPage from './pages/Test/TestPage';
@@ -34,13 +34,13 @@ function AppWithProviders({ children, user, setUser, socket }: PropsWithChildren
 }
 
 type Props = {
-  user?: User;
-  setUser: Dispatch<SetStateAction<User | undefined>>;
+  user?: UserWithoutPassword;
+  setUser: Dispatch<SetStateAction<UserWithoutPassword | undefined>>;
   socket: Socket;
 };
 
 function App() {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserWithoutPassword>();
   return (
     <AppWithProviders user={user} setUser={setUser} socket={socket}>
       <Router>

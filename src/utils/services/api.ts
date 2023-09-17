@@ -1,11 +1,19 @@
 import {
+  ConversationMessage,
   CreateConversationParams,
   CreateMessageParams,
   CreateUserParams,
   UpdateMessageParams,
   UserCredentialsParams,
+  UserWithoutPassword,
 } from './../types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+// Define your response and query parameter types
+
+/* type QueryParams = {
+  profileId: number; // Define the query parameters and their types
+}; */
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -18,19 +26,19 @@ export const authApi = createApi({
   }),
   tagTypes: ['Auth'],
   endpoints: (builder) => ({
-    status: builder.query<any, any>({
+    status: builder.query<UserWithoutPassword, void>({
       query: () => `auth/status`,
       providesTags: ['Auth'],
     }),
-    register: builder.mutation({
-      query: (data: CreateUserParams) => ({
+    register: builder.mutation<void, CreateUserParams>({
+      query: (data) => ({
         url: `auth/register`,
         method: 'POST',
         body: data,
       }),
       invalidatesTags: ['Auth'],
     }),
-    login: builder.mutation<any, any>({
+    login: builder.mutation({
       query: (data: UserCredentialsParams) => ({
         url: `auth/login`,
         method: 'POST',
@@ -51,7 +59,7 @@ export const messagesApi = createApi({
   }),
   tagTypes: ['Messages'],
   endpoints: (builder) => ({
-    getMessagesByConversationId: builder.query<any, any>({
+    getMessagesByConversationId: builder.query<ConversationMessage[], { conversationId: number }>({
       query: (conversationId) => `messages/${conversationId}`,
       providesTags: ['Messages'],
     }),
@@ -153,10 +161,10 @@ export const usersApi = createApi({
   }),
   tagTypes: ['Users'],
   endpoints: (builder) => ({
-    getUsers: builder.query<any, any>({
+    getUsers: builder.query<UserWithoutPassword[], void>({
       query: () => `users`,
     }),
-    getUser: builder.query<any[], number>({
+    getUser: builder.query<UserWithoutPassword[], number>({
       query: (id: number) => `users/${id}`,
     }),
   }),

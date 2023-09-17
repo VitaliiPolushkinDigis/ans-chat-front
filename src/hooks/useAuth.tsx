@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { getAuthUser } from '../utils/api';
 import { AuthContext } from '../utils/context/AuthContext';
 import { useLazyStatusQuery } from '../utils/services/api';
+import { UserWithoutPassword } from '../utils/types';
 
 export function useAuth() {
   const [loading, setLoading] = useState(true);
@@ -12,8 +12,10 @@ export function useAuth() {
 
   const controller = new AbortController();
   useEffect(() => {
-    getStatus({})
-      .then(({ data }) => {
+    getStatus()
+      .then((res) => {
+        const { data } = res as { data: UserWithoutPassword };
+
         udpateAuthUser(data);
         setTimeout(() => setLoading(false), 100);
       })

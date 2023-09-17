@@ -1,10 +1,10 @@
 import { Button } from '@mui/material';
 import { FC } from 'react';
 import { usePostConversationMutation } from '../../utils/services/api';
-import { User } from '../../utils/types';
+import { User, UserWithoutPassword } from '../../utils/types';
 
 interface UserProps {
-  user: User;
+  user: UserWithoutPassword;
 }
 
 const UserComponent: FC<UserProps> = ({ user }) => {

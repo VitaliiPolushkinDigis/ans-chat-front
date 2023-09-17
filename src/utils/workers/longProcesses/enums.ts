@@ -17,3 +17,8 @@ export enum Period {
   prev = 'prev',
   pageNumber = 'pageNumber',
 }
+
+export enum Sex {
+  male = 'male',
+  female = 'female',
+}

@@ -11,15 +11,17 @@ import { useFormik } from 'formik';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useStyles } from '../../../pages/AuthenticationPage/AuthenticationPage.helper';
-import { postRegisterUser } from '../../../utils/api';
 import { CreateUserParams } from '../../../utils/types';
 import { TextFieldComponent } from '../../TextFieldComponent/TextFieldComponent';
 import { useToasts } from 'react-toast-notifications';
+import { Sex } from '../../../utils/workers/longProcesses/enums';
+import { useRegisterMutation } from '../../../utils/services/api';
 
 interface RegisterFormProps {}
 
 const RegisterForm: FC<RegisterFormProps> = () => {
   const { addToast } = useToasts();
+  const [register] = useRegisterMutation();
   const styles = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -28,7 +30,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
       email: '',
       firstName: '',
       lastName: '',
-      sex: 'male',
+      sex: Sex.male,
     },
     enableReinitialize: true,
     validateOnChange: true,
@@ -45,7 +47,7 @@ const RegisterForm: FC<RegisterFormProps> = () => {
 
   const submitForm = async (data: CreateUserParams) => {
     try {
-      await postRegisterUser(data).then(() => {
+      await register(data).then(() => {
         addToast('Registered Successfully', { appearance: 'success' });
       });
     } catch (error: any) {

@@ -1,9 +1,9 @@
-import { createContext, FC } from 'react';
-import { User } from '../types';
+import { createContext } from 'react';
+import { UserWithoutPassword } from '../types';
 
 type AuthContextType = {
-  user?: User;
-  udpateAuthUser: (data: User) => void;
+  user?: UserWithoutPassword;
+  udpateAuthUser: (data: UserWithoutPassword) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
