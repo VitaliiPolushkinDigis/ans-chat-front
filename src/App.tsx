@@ -47,7 +47,7 @@ function App() {
         <Routes>
           <Route path="register" element={<AuthenticationPage />}></Route>
           <Route path="login" element={<LoginPage />}></Route>
-          <Route path="" element={<ProfilePage />}></Route>
+          <Route path="" element={<LoginPage />}></Route>
 
           <Route
             path="conversations"
@@ -62,9 +62,9 @@ function App() {
           <Route
             path="profiles"
             element={
-              /*      <AuthenticatedRoute> */
-              <ProfilePage />
-              /*  </AuthenticatedRoute> */
+              <AuthenticatedRoute>
+                <ProfilePage />
+              </AuthenticatedRoute>
             }
           >
             <Route path=":id" element={<ConversationChannelPage />} />
