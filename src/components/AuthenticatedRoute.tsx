@@ -10,7 +10,7 @@ export const AuthenticatedRoute: FC<PropsWithChildren> = ({ children }) => {
   if (loading) {
     return <div>{children}</div>;
   } else {
-    if (user) return <>{children}</>;
-    return <Navigate to="/login" state={{ from: location }} />;
+    /* if (user)  */ return <>{children}</>;
+    /*   return <Navigate to="/login" state={{ from: location }} />; */
   }
 };
