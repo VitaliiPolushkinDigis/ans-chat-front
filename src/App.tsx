@@ -62,9 +62,9 @@ function App() {
           <Route
             path="profiles"
             element={
-              <AuthenticatedRoute>
-                <ProfilePage />
-              </AuthenticatedRoute>
+              /*      <AuthenticatedRoute> */
+              <ProfilePage />
+              /*  </AuthenticatedRoute> */
             }
           >
             <Route path=":id" element={<ConversationChannelPage />} />
